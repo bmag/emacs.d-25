@@ -1,0 +1,9 @@
+# directories
+auto-save-list
+elpa
+
+# temp files
+*~
+
+# smex history
+smex-items
