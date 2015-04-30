@@ -1,9 +1,16 @@
 # directories
 auto-save-list
 elpa
+url
 
 # temp files
 *~
 
 # smex history
 smex-items
+
+# recentf history
+recent-files
+
+# projectile's projects
+projectile-bookmarks.eld

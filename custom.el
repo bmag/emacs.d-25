@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (xcscope iedit yasnippet window-purpose use-package smex paredit-everywhere magit flycheck company anaconda-mode ace-jump-mode))))
+    (flx-ido rainbow-delimiters yasnippet xcscope window-purpose use-package smex persp-projectile paredit-everywhere markdown-toc magit iedit idomenu ido-vertical-mode gh-md flycheck company anaconda-mode ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
