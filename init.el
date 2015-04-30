@@ -5,11 +5,14 @@
 (scroll-bar-mode -1)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
+(column-number-mode)
 (ido-mode)
 (setq ido-enable-flex-matching t)
 (show-paren-mode)
-(winner-mode)
 (windmove-default-keybindings)
+(winner-mode)
+
+(push (file-name-as-directory (expand-file-name "lisp" user-emacs-directory)) load-path)
 
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -41,6 +44,9 @@
   :config
   (global-flycheck-mode))
 
+(use-package iedit
+  :defer 1)
+
 (use-package magit :defer t)
 
 (use-package paredit
@@ -64,6 +70,18 @@
   (purpose-mode)
   (push '("*Pp Macroexpand Output*" . general) purpose-user-name-purposes)
   (purpose-compile-user-configuration))
+
+(use-package xcscope
+  :defer t
+  :init
+  (add-hook 'python-mode-hook #'cscope-minor-mode)
+  (setq cscope-option-do-not-update-database t
+	cscope-display-cscope-buffer nil))
+
+(use-package xref-conf
+  :defer 1
+  :config
+  (xref-conf-install-python))
 
 (use-package yasnippet
   :diminish yas-minor-mode

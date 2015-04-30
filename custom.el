@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (anaconda-mode magit yasnippet flycheck ace-jump-mode window-purpose use-package smex paredit-everywhere company))))
+    (xcscope iedit yasnippet window-purpose use-package smex paredit-everywhere magit flycheck company anaconda-mode ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
