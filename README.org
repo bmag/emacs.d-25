@@ -1,0 +1,23 @@
+* Changes
+** nav-mode
+*** DONE create prefix-command for ~nav-mode-map~
+*** DONE disable nav-mode temporarily when entering iedit-mode
+*** TODO allow copy and paste (kill, delete, yank) in nav-mode
+*** TODO make a key that binds to different keymaps depending on current major mode
+Maybe bind to a function that returns a prefix command?
+*** customize modes for which nav-mode should be enabled/disabled (see flycheck)
+** org-mode
+*** TODO install org-bullets
+*** TODO install org-repo-todo?
+** python-mode
+*** TODO use ipython
+** TODO window-purpose-x
+** xref-conf
+*** TODO use cscope for xref in python-mode
+*** TODO use gtags/cscope for xref in c-mode
+** TODO add a theme
+#-LIST: Options
+- tangotango
+- leuven
+- solarized dark/light
+*** TODO function (and binding?) for toggling light/dark themes

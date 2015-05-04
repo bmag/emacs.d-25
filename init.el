@@ -76,8 +76,14 @@
 (use-package iedit
   :defer 1)
 
+(use-package imenu-list
+  :defer t
+  :load-path "modules/imenu-list/")
+
 (use-package magit
   :defer t
+  :init
+  (setq magit-last-seen-setup-instructions "1.4.0")
   :config
   (defun magit-switch-fullscreen (buffer)
     (prog1 (switch-to-buffer buffer)
@@ -88,6 +94,20 @@
 (use-package markdown-mode :defer t)
 
 (use-package markdown-toc :defer t)
+
+(use-package nav-mode
+  ;; bug: first time "M-o" is pressed, it fails because of
+  ;; "Wrong type argument: commandp, nav-mode-prefix"
+  ;; second time "M-o" is pressed, it succeeds.
+  ;; seems that Emacs loads `nav-mode-prefix' after it checks whether it's a
+  ;; command, instead of before.
+  :bind (("M-m" . global-nav-mode)
+         ("M-o" . nav-mode-prefix)))
+
+(use-package org-bullets
+  :defer t
+  :init
+  (add-hook 'org-mode-hook #'org-bullets-mode))
 
 (use-package paredit
   :diminish paredit-mode
@@ -148,10 +168,12 @@
   (setq cscope-option-do-not-update-database t
     cscope-display-cscope-buffer nil))
 
-(use-package xref-conf
-  :defer 1
+(use-package xref
+  :defer t
   :config
-  (xref-conf-install-python))
+  (use-package xref-conf
+    :config
+    (xref-conf-install-python)))
 
 (use-package yasnippet
   :diminish yas-minor-mode
@@ -162,3 +184,4 @@
 (defconst init-finish-time (current-time))
 (defconst init-total-time (time-subtract init-finish-time init-start-time))
 (message "Loaded init (%s seconds)" (time-to-seconds init-total-time))
+(put 'dired-find-alternate-file 'disabled nil)
