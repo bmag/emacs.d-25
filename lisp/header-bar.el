@@ -4,6 +4,10 @@
 ;;; headers.  It is a bundled with buffer-header, which uses header-bar
 ;;; to build a header displaying existing buffers.
 
+;;; Bugs:
+;;; MAX-HEIGHT for `hb-update-window' doesn't shrink window if changed
+;;; to a number smaller than current window's height.
+
 ;;; Code:
 
 (require 'subr-x)
@@ -129,7 +133,19 @@ satisfies `hb-window-at-top-p'."
        ;; :foreground "black"
        ;; :background "orange"
        ))
-  "Face for buffer-header buttons.")
+  "Face for buffer-header buttons."
+  :group 'header-bar)
+
+(defcustom bh-ignore-buffer-regexps
+  '("^\\*magit" "^\\*Shell Command Output\\*$")
+  "List of regular expressions for ignoring buffers by name."
+  :group 'header-bar
+  :type '(repeat string))
+
+(defcustom bh-max-height 10
+  "Maximum height for the buffer header."
+  :group 'header-bar
+  :type 'number)
 
 (defconst bh-buffer-name "buffer-header")
 
@@ -139,13 +155,6 @@ satisfies `hb-window-at-top-p'."
                    'face 'bh-button-face
                    'buffer buffer)))
 
-(defun bh-display ()
-  (let ((hb-insert-single-text-function #'bh-insert-single-text)
-        (hb-separator " ")
-        (hb-end-char 32))
-    (hb-get-or-create-window bh-buffer-name)
-    (hb-update-window bh-buffer-name (bh-get-buffers))))
-
 (defun bh-get-buffers ()
   "Return list of buffer names to be displayed."
   (cl-loop for buffer in (buffer-list)
@@ -153,11 +162,14 @@ satisfies `hb-window-at-top-p'."
            collect (buffer-name buffer)))
 
 ;; TODO: make this function smarter
-;; `bh-ignore-buffer-regexps'
 ;; `bh-ignore-buffer-predicates'
 (defun bh-ignore-buffer (buffer)
-  (or (minibufferp buffer)
-      (string-prefix-p " " (buffer-name buffer))))
+  (let ((buffer-name (buffer-name buffer)))
+    (or (minibufferp buffer)
+        (string-prefix-p " " buffer-name)
+        (cl-member-if (lambda (regexp)
+                        (string-match-p regexp buffer-name))
+                      bh-ignore-buffer-regexps))))
 
 (defun bh-open-buffer-at-point (&optional pos)
   (let* ((pos (or pos (point)))
@@ -165,6 +177,15 @@ satisfies `hb-window-at-top-p'."
          (buffer (and button
                       (button-get button 'buffer))))
     (pop-to-buffer buffer)))
+
+(defun bh-display ()
+  (let ((hb-insert-single-text-function #'bh-insert-single-text)
+        (hb-separator " ")
+        (hb-end-char 32))
+    (hb-get-or-create-window bh-buffer-name)
+    (hb-update-window bh-buffer-name (bh-get-buffers) bh-max-height)))
+;; yes?
+;;(add-hook 'buffer-list-update-hook #'bh-display)
 
 (provide 'header-bar)
 ;;; header-bar.el ends here

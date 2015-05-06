@@ -43,6 +43,17 @@
   (define-key company-active-map (kbd "<backtab>") #'company-select-previous)
   (setq company-idle-delay 0.3))
 
+(use-package eclim
+  :defer 1
+  :config
+  (setq eclim-eclipse-dirs '("/opt/eclipse"))
+  (setq eclim-executable "/opt/eclipse/eclim")
+  (global-eclim-mode)
+  (use-package eclimd)
+  (use-package company-emacs-eclim
+    :config
+    (company-emacs-eclim-setup)))
+
 (use-package flycheck
   :defer 1
   :config
@@ -79,6 +90,13 @@
 (use-package imenu-list
   :defer t
   :load-path "modules/imenu-list/")
+
+(use-package jump-do
+  :commands (jump-do-anaconda-view-doc jump-do-anaconda-usages)
+  :init
+  (with-eval-after-load 'anaconda-mode
+    (bind-key "C-c h" #'jump-do-anaconda-view-doc anaconda-mode-map)
+    (bind-key "C-c u" #'jump-do-anaconda-usages anaconda-mode-map)))
 
 (use-package magit
   :defer t
