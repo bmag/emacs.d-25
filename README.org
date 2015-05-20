@@ -1,3 +1,17 @@
+* helm-cscope
+#-BEGIN_SRC: emacs-lisp
+(helm-cscope--find-common "-0" symbol) ;; (helm-cscope--find-common "-0" "parser")
+(helm :sources
+      (mapcar (lambda (e)
+np                (helm-cscope--make-source
+                 (file-name-directory
+                  (cscope-search-directory-hierarchy (car e)))
+                 (if (file-regular-p (car e))
+                     (file-name-nondirectory (car e)) cscope-database-file)
+                 "-0" "parser" (cadr e)))
+              search-dir-list)
+      :buffer "*Helm cscope*")
+#-END_SRC
 * Changes
 ** nav-mode
 *** DONE create prefix-command for ~nav-mode-map~
