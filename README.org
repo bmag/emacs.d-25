@@ -1,5 +1,5 @@
 * helm-cscope
-#-BEGIN_SRC: emacs-lisp
+#+BEGIN_SRC: emacs-lisp
 (helm-cscope--find-common "-0" symbol) ;; (helm-cscope--find-common "-0" "parser")
 (helm :sources
       (mapcar (lambda (e)
@@ -11,7 +11,7 @@ np                (helm-cscope--make-source
                  "-0" "parser" (cadr e)))
               search-dir-list)
       :buffer "*Helm cscope*")
-#-END_SRC
+#+END_SRC
 * Changes
 ** nav-mode
 *** DONE create prefix-command for ~nav-mode-map~
@@ -30,7 +30,7 @@ Maybe bind to a function that returns a prefix command?
 *** TODO use cscope for xref in python-mode
 *** TODO use gtags/cscope for xref in c-mode
 ** TODO add a theme
-#-LIST: Options
+#+LIST: Options
 - tangotango
 - leuven
 - solarized dark/light
