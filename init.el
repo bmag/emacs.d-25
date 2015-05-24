@@ -44,6 +44,16 @@
   :config
   (global-anzu-mode))
 
+(use-package comint
+  :defer t
+  :config
+  ;; originally on C-c M-r and C-c M-s
+  (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
+  (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
+  ;; originally on M-p and M-n
+  (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
+  (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input))
+
 (use-package company
   :diminish company-mode
   :defer 1

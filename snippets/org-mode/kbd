@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: kbd
+# key: kbd
+# binding: direct-keybinding
+# --
+@@html:<kbd>${1:`(help-key-description (read-key-sequence "Type key: ") nil)`}</kbd>@@$0

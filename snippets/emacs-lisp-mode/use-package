@@ -1,0 +1,12 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: use-package
+# key: use
+# binding: direct-keybinding
+# --
+(use-package $1
+${2::defer ${3:t}
+}${4::init
+$5
+}${6::config
+$7})
+$0
